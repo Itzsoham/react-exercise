@@ -7,13 +7,17 @@ interface AuthState {
 }
 
 export const useAppStore = create<AuthState>((set) => ({
-  isAuthenticated: !!localStorage.getItem("auth"),
+  isAuthenticated: localStorage.getItem("auth") === "true",
+
   login: () => {
     localStorage.setItem("auth", "true");
     set({ isAuthenticated: true });
   },
+
   logout: () => {
-    localStorage.removeItem("auth");
-    set({ isAuthenticated: false });
+    set((state) => {
+      localStorage.removeItem("auth");
+      return { isAuthenticated: false };
+    });
   },
 }));

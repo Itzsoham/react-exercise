@@ -1,9 +1,17 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAppStore } from "./store/app.store";
+import { useAppStore } from "@/pages/landing/store/app.store";
+import { Navbar } from "@/components/Navbar";
 
 const ProtectedRoute = () => {
   const isAuthenticated = useAppStore((state) => state.isAuthenticated);
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+  return isAuthenticated ? (
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+  ) : (
+    <Navigate to="/login" replace />
+  );
 };
 
 export default ProtectedRoute;

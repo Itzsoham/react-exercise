@@ -8,30 +8,40 @@ import {
   TextInput,
   Title,
 } from "@mantine/core";
-import classes from "./AuthenticationImage.module.css";
+import classes from "./Login.module.css";
 import { useAppStore } from "../landing/store/app.store";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-export function Login() {
+export default function Login() {
   const login = useAppStore((state) => state.login);
   const navigate = useNavigate();
 
+  const [email, setEmail] = useState("test@exemple.com");
+  const [password, setPassword] = useState("123Qwe");
+
   const handleLogin = () => {
-    login();
-    navigate("/"); // Redirect to dashboard
+    if (email && password) {
+      login();
+      navigate("/"); // Redirect to dashboard
+    } else {
+      alert("Both email and password are required.");
+    }
   };
 
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
-        <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
-          Welcome back to Mantine!
+        <Title order={2} className={classes.title} ta="center" mt="md" mb={30}>
+          Welcome back!
         </Title>
 
         <TextInput
           label="Email address"
-          placeholder="hello@gmail.com"
+          placeholder="Your email"
           size="md"
+          value={email}
+          onChange={(event) => setEmail(event.currentTarget.value)}
           required
         />
         <PasswordInput
@@ -39,10 +49,21 @@ export function Login() {
           placeholder="Your password"
           mt="md"
           size="md"
+          value={password}
+          onChange={(event) => setPassword(event.currentTarget.value)}
           required
         />
-        <Checkbox label="Keep me logged in" mt="xl" size="md" />
-        <Button fullWidth mt="xl" size="md" onClick={handleLogin}>
+        <Checkbox label="Keep me logged in" mt="xl" size="md" color="blue" />
+        <Button
+          fullWidth
+          mt="xl"
+          size="md"
+          onClick={handleLogin}
+          color="blue"
+          variant="filled"
+          radius="xl"
+          type="submit"
+        >
           Login
         </Button>
 
