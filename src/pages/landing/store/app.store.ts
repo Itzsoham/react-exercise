@@ -15,9 +15,7 @@ export const useAppStore = create<AuthState>((set) => ({
   },
 
   logout: () => {
-    set((state) => {
-      localStorage.removeItem("auth");
-      return { isAuthenticated: false };
-    });
+    localStorage.removeItem("auth");
+    set({ isAuthenticated: false });
   },
 }));

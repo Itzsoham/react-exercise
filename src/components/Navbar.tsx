@@ -1,4 +1,4 @@
-import { IconFingerprint } from "@tabler/icons-react";
+import { IconCrown } from "@tabler/icons-react";
 import {
   Box,
   Burger,
@@ -12,7 +12,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import classes from "@/components/Navbar.module.css";
 import { useAppStore } from "@/pages/landing/store/app.store";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export function Navbar() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -28,24 +28,33 @@ export function Navbar() {
   return (
     <Box px={100}>
       <header className={classes.header}>
-        <Group position="apart" h="100%">
+        <Group align="center" justify="space-between" h="100%">
           <ThemeIcon
-            color="blue"
             size="xl"
             radius="xl"
             onClick={() => navigate("/")}
-            className="cursor-pointer"
+            className="logo"
           >
-            <IconFingerprint />
+            <IconCrown />
           </ThemeIcon>
-          <Group h="100%" spacing={20} display={{ base: "none", sm: "flex" }}>
-            <Link to="/users" className={classes.link}>
-              UserList
-            </Link>
+          <Group h="100%" gap={20} display={{ base: "none", sm: "flex" }}>
+            <NavLink
+              to="/products"
+              className={({ isActive }) =>
+                isActive ? `${classes.link} ${classes.active}` : classes.link
+              }
+            >
+              Product List
+            </NavLink>
 
-            <Link to="/" className={classes.link}>
-              User Detail
-            </Link>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive ? `${classes.link} ${classes.active}` : classes.link
+              }
+            >
+              Product Detail
+            </NavLink>
           </Group>
 
           <Group display={{ base: "none", sm: "flex" }}>
@@ -68,25 +77,26 @@ export function Navbar() {
         size="100%"
         padding="md"
         title="Navigation"
-        styles={(theme) => ({
+        styles={{
           content: {
-            [theme.fn.largerThan("sm")]: {
-              display: "none",
-            },
+            display: "none",
           },
-        })}
+        }}
         zIndex={1000000}
       >
         <ScrollArea h="calc(100vh - 80px" mx="-md">
           <Divider my="sm" />
 
-          <Link to="/users" className={classes.link}>
-            UserList
-          </Link>
+          <NavLink to="/products" className={classes.link}>
+            Product List
+          </NavLink>
+          <NavLink to="/products/create" className={classes.link}>
+            Create Product
+          </NavLink>
 
           <Divider my="sm" />
 
-          <Group position="center" grow pb="xl" px="md">
+          <Group align="center" grow pb="xl" px="md">
             <Button variant="default" onClick={handleLogout}>
               Logout
             </Button>

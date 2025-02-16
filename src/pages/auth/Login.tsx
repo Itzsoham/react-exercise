@@ -31,7 +31,7 @@ export default function Login() {
 
   return (
     <div className={classes.wrapper}>
-      <Paper className={classes.form} radius={0} p={30}>
+      <Paper className={classes.form} radius={0} p={30} pt={150}>
         <Title order={2} className={classes.title} ta="center" mt="md" mb={30}>
           Welcome back!
         </Title>
@@ -53,13 +53,12 @@ export default function Login() {
           onChange={(event) => setPassword(event.currentTarget.value)}
           required
         />
-        <Checkbox label="Keep me logged in" mt="xl" size="md" color="blue" />
+        <Checkbox label="Keep me logged in" mt="xl" size="md" />
         <Button
           fullWidth
           mt="xl"
           size="md"
           onClick={handleLogin}
-          color="blue"
           variant="filled"
           radius="xl"
           type="submit"

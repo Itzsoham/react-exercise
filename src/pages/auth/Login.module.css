@@ -5,16 +5,10 @@
 }
 
 .form {
-  border-right: 2px solid
+  border-right: 1px solid
     light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-7));
   min-height: 100vh;
   max-width: 450px;
-  padding-top: 150px;
-  background-color: light-dark(
-    var(--mantine-color-gray-3),
-    var(--mantine-color-dark-7)
-  );
-
   @media (max-width: 600px) {
     max-width: 100%;
   }

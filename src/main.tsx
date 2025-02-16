@@ -7,7 +7,7 @@ import App from "./App";
 import Landing from "./pages/landing/Landing";
 import ProtectedRoute from "./pages/landing/ProtectedRoute";
 import Login from "./pages/auth/Login";
-import UserList from "./pages/UserList";
+import ProductList from "./pages/ProductList";
 import UserDetails from "./pages/UserDetails";
 
 export const routes = [
@@ -21,7 +21,7 @@ export const routes = [
         element: <ProtectedRoute />,
         children: [
           { path: "/", element: <Landing /> },
-          { path: "/users", element: <UserList /> },
+          { path: "/products", element: <ProductList /> },
           { path: "/users/:id", element: <UserDetails /> },
         ],
       },

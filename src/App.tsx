@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { MantineProvider } from "@mantine/core";
 import { theme } from "./theme";
 import "./App.scss";
+import "@mantine/core/styles.css";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -12,7 +13,7 @@ export default function App() {
   }, [pathname]);
 
   return (
-    <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
+    <MantineProvider theme={theme}>
       <Outlet />
     </MantineProvider>
   );

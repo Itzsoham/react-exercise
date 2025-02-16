@@ -1,18 +1,16 @@
 import { MantineThemeOverride } from "@mantine/core";
 
 export const theme: MantineThemeOverride = {
-  colorScheme: "light",
   primaryColor: "primary",
   primaryShade: 6,
-  fontFamily: "Outfit,sans-serif",
+  fontFamily: "Outfit, sans-serif",
   fontFamilyMonospace: "Monaco, Courier, monospace",
   fontSizes: {
-    // 16px
-    xs: "1rem", // 12px
-    sm: "1rem", // 14px
-    md: "1.25rem", // 16px
-    lg: "1.5rem", // 18px
-    xl: "1.8rem", // 20px
+    xs: "1rem",
+    sm: "1rem",
+    md: "1.25rem",
+    lg: "1.5rem",
+    xl: "1.8rem",
   },
   breakpoints: {
     xs: "30em",
@@ -21,13 +19,6 @@ export const theme: MantineThemeOverride = {
     lg: "74em",
     xl: "90em",
   },
-  // radius: {
-  // 	xs: '0.25rem',
-  // 	sm: '0.375rem',
-  // 	md: '0.5rem',
-  // 	lg: '0.75rem',
-  // 	xl: '1rem'
-  // },
   spacing: {
     xs: "0.25rem",
     sm: "0.5rem",
@@ -43,69 +34,39 @@ export const theme: MantineThemeOverride = {
     xl: "1.25rem",
   },
   headings: {
-    fontFamily: "Outfit,sans-serif;",
+    fontFamily: "Outfit, sans-serif",
     sizes: {
-      h1: {
-        fontSize: "2.1rem",
-        fontWeight: 700,
-      },
-      h2: {
-        fontSize: "1.9rem",
-        fontWeight: 500,
-      },
-      h3: {
-        fontSize: "1.75rem",
-        fontWeight: 500,
-      },
-      h4: {
-        fontSize: "1.5rem",
-        fontWeight: 500,
-      },
-      h5: {
-        fontSize: "1.2rem",
-        fontWeight: 500,
-      },
+      h1: { fontSize: "2.1rem", fontWeight: "700", lineHeight: "2.6rem" },
+      h2: { fontSize: "1.9rem", fontWeight: "500", lineHeight: "2.4rem" },
+      h3: { fontSize: "1.75rem", fontWeight: "500", lineHeight: "2.2rem" },
+      h4: { fontSize: "1.5rem", fontWeight: "500", lineHeight: "2rem" },
+      h5: { fontSize: "1.2rem", fontWeight: "500", lineHeight: "1.8rem" },
     },
   },
   components: {
     TextInput: {
-      styles: {
-        label: {
-          fontSize: "1rem",
-          //   color: "#DCE7FCFF",
+      vars: (theme: MantineThemeOverride) => ({
+        root: {
+          borderRadius: "2rem",
         },
-        input: {
-          borderRadius: "2rem !important",
-          backgroundColor: "#DCE7FCFF",
-        },
-      },
+      }),
     },
     PasswordInput: {
-      styles: {
-        label: {
-          fontSize: "1rem",
-          //   color: "#DCE7FCFF",
+      vars: (theme: MantineThemeOverride) => ({
+        root: {
+          borderRadius: "2rem",
         },
-        input: {
-          borderRadius: "2rem !important",
-          backgroundColor: "#DCE7FCFF",
-        },
-      },
+      }),
     },
     Select: {
-      styles: {
-        label: {
-          fontSize: "1rem",
-          color: "#DCE7FCFF",
+      vars: (theme: MantineThemeOverride) => ({
+        root: {
+          borderRadius: "2rem",
         },
-        input: {
-          borderRadius: "2rem !important",
-          backgroundColor: "#DCE7FCFF",
-        },
-      },
+      }),
     },
     BackgroundImage: {
-      styles: {
+      vars: {
         root: {
           img: {
             filter: "blur(12px)",
@@ -113,8 +74,8 @@ export const theme: MantineThemeOverride = {
         },
       },
     },
-    header: {
-      styles: {
+    Header: {
+      vars: {
         root: {
           backgroundColor: "#FFFFFF",
         },
@@ -132,6 +93,7 @@ export const theme: MantineThemeOverride = {
       "#232F53",
       "#1B2541",
       "#001A41",
+      "#000000",
     ],
     secondary: [
       "#DCDDEC",
@@ -193,6 +155,17 @@ export const theme: MantineThemeOverride = {
       "#313038",
       "#21222C",
     ],
-    shades: ["#FFFFFF", "#000000"],
+    shades: [
+      "#FFFFFF",
+      "#000000",
+      "#000000",
+      "#000000",
+      "#000000",
+      "#000000",
+      "#000000",
+      "#000000",
+      "#000000",
+      "#000000",
+    ],
   },
 };
