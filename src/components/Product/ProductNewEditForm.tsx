@@ -98,7 +98,6 @@ const ProductNewEditForm = ({
 }) => {
   const navigate = useNavigate();
   const [includeTaxes, setIncludeTaxes] = useState(false);
-  console.log(currentProduct);
 
   const defaultValues = useMemo(
     () => ({

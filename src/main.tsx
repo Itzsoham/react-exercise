@@ -1,11 +1,10 @@
-import { StrictMode, Suspense, lazy } from "react";
-import ReactDOM from "react-dom/client";
+import { StrictMode, lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ReactDOM from "react-dom/client";
 
 import App from "./App";
 import ProtectedRoute from "./pages/landing/ProtectedRoute";
-import { Loader } from "@mantine/core";
 
 const Landing = lazy(() => import("./pages/landing/Landing"));
 const Login = lazy(() => import("./pages/auth/Login"));
@@ -50,9 +49,7 @@ const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Suspense fallback={<Loader />}>
-        <RouterProvider router={router} />
-      </Suspense>
+      <RouterProvider router={router} />
     </QueryClientProvider>
   </StrictMode>
 );

@@ -10,9 +10,12 @@ import {
   ThemeIcon,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import classes from "@/components/Navbar.module.css";
-import { useAppStore } from "@/pages/landing/store/app.store";
+import { notifications } from "@mantine/notifications";
+import { useMatch } from "react-router-dom";
 import { NavLink, useNavigate } from "react-router-dom";
+
+import { useAppStore } from "@/pages/landing/store/app.store";
+import classes from "@/components/Navbar.module.css";
 
 export function Navbar() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -20,13 +23,21 @@ export function Navbar() {
   const logout = useAppStore((state) => state.logout);
   const navigate = useNavigate();
 
+  const isProductDetail = useMatch("/product/:id");
+  const isBlogDetail = useMatch("/blog/:slug");
+
   function handleLogout() {
     logout();
+    notifications.show({
+      title: "Info",
+      message: "You have been successfully logged out",
+      color: "blue",
+    });
     navigate("/login");
   }
 
   return (
-    <Box px={100}>
+    <Box px={{ base: 20, md: 100 }}>
       <header className={classes.header}>
         <Group align="center" justify="space-between" h="100%">
           <ThemeIcon
@@ -37,6 +48,7 @@ export function Navbar() {
           >
             <IconCrown />
           </ThemeIcon>
+
           <Group h="100%" gap={20} display={{ base: "none", sm: "flex" }}>
             <NavLink
               to="/products"
@@ -46,14 +58,29 @@ export function Navbar() {
             >
               Product List
             </NavLink>
-
             <NavLink
-              to="/"
+              to="/product/e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2"
               className={({ isActive }) =>
                 isActive ? `${classes.link} ${classes.active}` : classes.link
               }
             >
               Product Detail
+            </NavLink>
+            <NavLink
+              to="/blogs"
+              className={({ isActive }) =>
+                isActive ? `${classes.link} ${classes.active}` : classes.link
+              }
+            >
+              Blogs
+            </NavLink>
+            <NavLink
+              to="/blog/the-ultimate-guide-to-productivity-hacks"
+              className={({ isActive }) =>
+                isActive ? `${classes.link} ${classes.active}` : classes.link
+              }
+            >
+              Blog Detail
             </NavLink>
           </Group>
 
@@ -77,21 +104,35 @@ export function Navbar() {
         size="100%"
         padding="md"
         title="Navigation"
-        styles={{
-          content: {
-            display: "none",
-          },
-        }}
+        hiddenFrom="sm"
         zIndex={1000000}
       >
         <ScrollArea h="calc(100vh - 80px" mx="-md">
           <Divider my="sm" />
 
-          <NavLink to="/products" className={classes.link}>
+          <NavLink
+            to="/products"
+            className={classes.link}
+            onClick={closeDrawer}
+          >
             Product List
           </NavLink>
-          <NavLink to="/products/create" className={classes.link}>
-            Create Product
+          <NavLink
+            to="/product/e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2"
+            className={classes.link}
+            onClick={closeDrawer}
+          >
+            Product Detail
+          </NavLink>
+          <NavLink to="/blogs" className={classes.link} onClick={closeDrawer}>
+            Blogs
+          </NavLink>
+          <NavLink
+            to="/blog/the-ultimate-guide-to-productivity-hacks"
+            className={classes.link}
+            onClick={closeDrawer}
+          >
+            Blog Detail
           </NavLink>
 
           <Divider my="sm" />

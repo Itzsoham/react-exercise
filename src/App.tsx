@@ -1,9 +1,13 @@
 import { Suspense, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Loader, MantineProvider } from "@mantine/core";
-import { theme } from "./theme";
-import "./App.scss";
+import { Notifications } from "@mantine/notifications";
+
 import "@mantine/core/styles.css";
+import "@mantine/notifications/styles.css";
+
+import "./App.scss";
+import { theme } from "./theme";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -14,6 +18,7 @@ export default function App() {
 
   return (
     <MantineProvider theme={theme}>
+      <Notifications position="top-right" />
       <Suspense
         fallback={
           <div

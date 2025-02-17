@@ -12,6 +12,7 @@ import classes from "./Login.module.css";
 import { useAppStore } from "../landing/store/app.store";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { notifications } from "@mantine/notifications";
 
 export default function Login() {
   const login = useAppStore((state) => state.login);
@@ -23,10 +24,28 @@ export default function Login() {
   const handleLogin = () => {
     if (email && password) {
       login();
-      navigate("/"); // Redirect to dashboard
+      notifications.show({
+        title: "Success",
+        message: "You have successfully logged in.",
+        color: "green",
+      });
+      navigate("/");
     } else {
-      alert("Both email and password are required.");
+      notifications.show({
+        title: "Error",
+        message: "Please fill Email and Password fields.",
+        color: "red",
+      });
     }
+  };
+
+  const handleRegister = (event: React.MouseEvent) => {
+    event.preventDefault();
+    notifications.show({
+      title: "Info",
+      message: "Register is not implemented yet.",
+      color: "blue",
+    });
   };
 
   return (
@@ -68,11 +87,7 @@ export default function Login() {
 
         <Text ta="center" mt="md">
           Don&apos;t have an account?{" "}
-          <Anchor<"a">
-            href="#"
-            fw={700}
-            onClick={(event) => event.preventDefault()}
-          >
+          <Anchor<"a"> href="#" fw={700} onClick={handleRegister}>
             Register
           </Anchor>
         </Text>
