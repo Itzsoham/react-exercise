@@ -11,3 +11,12 @@ export function fDate(date: string | Date, newFormat?: string) {
 
   return date ? format(new Date(date), fm) : "";
 }
+
+/// other utils
+
+export function paramCase(str: string) {
+  return str
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+}

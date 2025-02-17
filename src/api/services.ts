@@ -36,6 +36,15 @@ async function fetchSearchBlogs(query: string) {
   return response.json();
 }
 
+async function fetchBlogDetails(title: string) {
+  const response = await fetch(URL + `post/details?title=${title}`);
+
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  return response.json();
+}
+
 // react query hooks //
 
 export function useGetProducts() {
@@ -95,5 +104,19 @@ export function useSearchBlogs(query: string) {
     searchError: error,
     searchFetching: isFetching,
     searchEmpty: !isLoading && !data?.posts?.length,
+  };
+}
+
+export function useGetBlog(title: string) {
+  const { data, isLoading, error, isFetching } = useQuery({
+    queryKey: ["blog", title],
+    queryFn: () => fetchBlogDetails(title),
+  });
+
+  return {
+    blog: data,
+    blogLoading: isLoading,
+    blogError: error,
+    blogFetching: isFetching,
   };
 }

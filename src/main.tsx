@@ -11,6 +11,8 @@ const Landing = lazy(() => import("./pages/landing/Landing"));
 const Login = lazy(() => import("./pages/auth/Login"));
 const ProductList = lazy(() => import("./pages/ProductList"));
 const ProductDetails = lazy(() => import("./pages/ProductDetails"));
+const BlogList = lazy(() => import("./pages/BlogList"));
+const BlogDetails = lazy(() => import("./pages/BlogDetails"));
 
 export const routes = [
   {
@@ -25,6 +27,8 @@ export const routes = [
           { path: "/", element: <Landing /> },
           { path: "/products", element: <ProductList /> },
           { path: "/product/:id", element: <ProductDetails /> },
+          { path: "/blogs", element: <BlogList /> },
+          { path: "/blog/:title", element: <BlogDetails /> },
         ],
       },
     ],
