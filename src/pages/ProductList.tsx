@@ -8,6 +8,7 @@ import {
   ActionIcon,
   Tooltip,
   Title,
+  ScrollArea,
 } from "@mantine/core";
 import {
   IconArrowUp,
@@ -15,7 +16,6 @@ import {
   IconPencil,
   IconTrash,
 } from "@tabler/icons-react";
-import { useGetProducts } from "@/api/services";
 import ProductTableToolbar from "@/components/Product/ProductTableToolbar";
 import {
   RenderCellStock,
@@ -26,6 +26,7 @@ import {
   RowData,
 } from "@/components/Product/ProductTableCell";
 import { useNavigate } from "react-router-dom";
+import { useGetProducts } from "@/api/services";
 
 const PUBLISH_OPTIONS = [
   { value: "published", label: "Published" },
@@ -69,7 +70,6 @@ export default function ProductListView() {
     setTableData(filteredData);
   }, [products, filters]);
 
-  // Sorting logic
   const handleSort = (column: keyof RowData) => {
     setSortBy(column);
     setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
@@ -114,123 +114,125 @@ export default function ProductListView() {
         {productsLoading ? (
           <Loader size="lg" />
         ) : (
-          <Table striped highlightOnHover>
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th
-                  onClick={() => handleSort("name")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Product{" "}
-                  {sortBy === "name" &&
-                    (sortDirection === "asc" ? (
-                      <IconArrowUp size={16} />
-                    ) : (
-                      <IconArrowDown size={16} />
-                    ))}
-                </Table.Th>
-                <Table.Th
-                  onClick={() => handleSort("createdAt")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Created At{" "}
-                  {sortBy === "createdAt" &&
-                    (sortDirection === "asc" ? (
-                      <IconArrowUp size={16} />
-                    ) : (
-                      <IconArrowDown size={16} />
-                    ))}
-                </Table.Th>
-                <Table.Th
-                  onClick={() => handleSort("inventoryType")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Stock{" "}
-                  {sortBy === "inventoryType" &&
-                    (sortDirection === "asc" ? (
-                      <IconArrowUp size={16} />
-                    ) : (
-                      <IconArrowDown size={16} />
-                    ))}
-                </Table.Th>
-                <Table.Th
-                  onClick={() => handleSort("price")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Price{" "}
-                  {sortBy === "price" &&
-                    (sortDirection === "asc" ? (
-                      <IconArrowUp size={16} />
-                    ) : (
-                      <IconArrowDown size={16} />
-                    ))}
-                </Table.Th>
-                <Table.Th
-                  onClick={() => handleSort("publish")}
-                  style={{ cursor: "pointer" }}
-                >
-                  Publish{" "}
-                  {sortBy === "publish" &&
-                    (sortDirection === "asc" ? (
-                      <IconArrowUp size={16} />
-                    ) : (
-                      <IconArrowDown size={16} />
-                    ))}
-                </Table.Th>
-                <Table.Th>Actions</Table.Th>
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-              {tableData.length ? (
-                tableData.map((row) => (
-                  <Table.Tr key={row.id}>
-                    <Table.Td>
-                      <RenderCellProduct params={{ row }} />
-                    </Table.Td>
-                    <Table.Td>
-                      <RenderCellCreatedAt params={{ row }} />
-                    </Table.Td>
-                    <Table.Td>
-                      <RenderCellStock params={{ row }} />
-                    </Table.Td>
-                    <Table.Td>
-                      <RenderCellPrice params={{ row }} />
-                    </Table.Td>
-                    <Table.Td>
-                      <RenderCellPublish params={{ row }} />
-                    </Table.Td>
-                    <Table.Td>
-                      <Group gap="xs">
-                        <Tooltip label="Edit">
-                          <ActionIcon
-                            variant="subtle"
-                            onClick={() => handleEditRow(row.id)}
-                          >
-                            <IconPencil size={18} />
-                          </ActionIcon>
-                        </Tooltip>
-                        <Tooltip label="Delete">
-                          <ActionIcon
-                            color="red"
-                            variant="subtle"
-                            onClick={() => handleDeleteRow(row.id)}
-                          >
-                            <IconTrash size={18} />
-                          </ActionIcon>
-                        </Tooltip>
-                      </Group>
+          <ScrollArea style={{ width: "100%" }}>
+            <Table striped highlightOnHover style={{ minWidth: "800px" }}>
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th
+                    onClick={() => handleSort("name")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Product{" "}
+                    {sortBy === "name" &&
+                      (sortDirection === "asc" ? (
+                        <IconArrowUp size={16} />
+                      ) : (
+                        <IconArrowDown size={16} />
+                      ))}
+                  </Table.Th>
+                  <Table.Th
+                    onClick={() => handleSort("createdAt")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Created At{" "}
+                    {sortBy === "createdAt" &&
+                      (sortDirection === "asc" ? (
+                        <IconArrowUp size={16} />
+                      ) : (
+                        <IconArrowDown size={16} />
+                      ))}
+                  </Table.Th>
+                  <Table.Th
+                    onClick={() => handleSort("inventoryType")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Stock{" "}
+                    {sortBy === "inventoryType" &&
+                      (sortDirection === "asc" ? (
+                        <IconArrowUp size={16} />
+                      ) : (
+                        <IconArrowDown size={16} />
+                      ))}
+                  </Table.Th>
+                  <Table.Th
+                    onClick={() => handleSort("price")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Price{" "}
+                    {sortBy === "price" &&
+                      (sortDirection === "asc" ? (
+                        <IconArrowUp size={16} />
+                      ) : (
+                        <IconArrowDown size={16} />
+                      ))}
+                  </Table.Th>
+                  <Table.Th
+                    onClick={() => handleSort("publish")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Publish{" "}
+                    {sortBy === "publish" &&
+                      (sortDirection === "asc" ? (
+                        <IconArrowUp size={16} />
+                      ) : (
+                        <IconArrowDown size={16} />
+                      ))}
+                  </Table.Th>
+                  <Table.Th>Actions</Table.Th>
+                </Table.Tr>
+              </Table.Thead>
+              <Table.Tbody>
+                {tableData.length ? (
+                  tableData.map((row) => (
+                    <Table.Tr key={row.id}>
+                      <Table.Td>
+                        <RenderCellProduct params={{ row }} />
+                      </Table.Td>
+                      <Table.Td>
+                        <RenderCellCreatedAt params={{ row }} />
+                      </Table.Td>
+                      <Table.Td>
+                        <RenderCellStock params={{ row }} />
+                      </Table.Td>
+                      <Table.Td>
+                        <RenderCellPrice params={{ row }} />
+                      </Table.Td>
+                      <Table.Td>
+                        <RenderCellPublish params={{ row }} />
+                      </Table.Td>
+                      <Table.Td>
+                        <Group gap="xs">
+                          <Tooltip label="Edit">
+                            <ActionIcon
+                              variant="subtle"
+                              onClick={() => handleEditRow(row.id)}
+                            >
+                              <IconPencil size={18} />
+                            </ActionIcon>
+                          </Tooltip>
+                          <Tooltip label="Delete">
+                            <ActionIcon
+                              color="red"
+                              variant="subtle"
+                              onClick={() => handleDeleteRow(row.id)}
+                            >
+                              <IconTrash size={18} />
+                            </ActionIcon>
+                          </Tooltip>
+                        </Group>
+                      </Table.Td>
+                    </Table.Tr>
+                  ))
+                ) : (
+                  <Table.Tr>
+                    <Table.Td colSpan={6}>
+                      <Title order={4}>No Products Found</Title>
                     </Table.Td>
                   </Table.Tr>
-                ))
-              ) : (
-                <Table.Tr>
-                  <Table.Td colSpan={6}>
-                    <Title order={4}>Loading...</Title>
-                  </Table.Td>
-                </Table.Tr>
-              )}
-            </Table.Tbody>
-          </Table>
+                )}
+              </Table.Tbody>
+            </Table>
+          </ScrollArea>
         )}
       </Card>
     </Container>

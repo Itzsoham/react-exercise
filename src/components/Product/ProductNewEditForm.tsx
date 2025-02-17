@@ -1,11 +1,8 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
-import * as Yup from "yup";
+import { useState, useMemo, useCallback } from "react";
 import {
-  Box,
   Button,
   Card,
   Checkbox,
-  Divider,
   Group,
   MultiSelect,
   NumberInput,
@@ -14,53 +11,20 @@ import {
   Switch,
   Text,
   TextInput,
-  Textarea,
   Title,
 } from "@mantine/core";
 import { Dropzone, FileWithPath } from "@mantine/dropzone";
 import { showNotification } from "@mantine/notifications";
 import { useNavigate } from "react-router-dom";
 import { useForm, yupResolver } from "@mantine/form";
+import * as Yup from "yup";
 
-export const PRODUCT_SIZE_OPTIONS = [
-  { value: "7", label: "7" },
-  { value: "8", label: "8" },
-  { value: "8.5", label: "8.5" },
-  { value: "9", label: "9" },
-  { value: "9.5", label: "9.5" },
-  { value: "10", label: "10" },
-  { value: "10.5", label: "10.5" },
-  { value: "11", label: "11" },
-  { value: "11.5", label: "11.5" },
-  { value: "12", label: "12" },
-  { value: "13", label: "13" },
-];
-
-export const PRODUCT_COLOR_NAME_OPTIONS = [
-  { value: "red", label: "Red" },
-  { value: "blue", label: "Blue" },
-  { value: "cyan", label: "Cyan" },
-  { value: "green", label: "Green" },
-  { value: "yellow", label: "Yellow" },
-  { value: "violet", label: "Violet" },
-  { value: "black", label: "Black" },
-  { value: "white", label: "White" },
-];
-
-export const PRODUCT_CATEGORY_GROUP_OPTIONS = [
-  {
-    group: "Clothing",
-    classify: ["Shirts", "T-shirts", "Jeans", "Leather", "Accessories"],
-  },
-  {
-    group: "Tailored",
-    classify: ["Suits", "Blazers", "Trousers", "Waistcoats", "Apparel"],
-  },
-  {
-    group: "Accessories",
-    classify: ["Shoes", "Backpacks and bags", "Bracelets", "Face masks"],
-  },
-];
+import {
+  PRODUCT_CATEGORY_GROUP_OPTIONS,
+  PRODUCT_COLOR_NAME_OPTIONS,
+  PRODUCT_SIZE_OPTIONS,
+} from "@/utils/constants";
+import ProductRichTextEditor from "./ProductRichTextEditor";
 
 interface ProductFormValues {
   name: string;
@@ -119,7 +83,7 @@ const ProductNewEditForm = ({
       newLabel: currentProduct?.newLabel || { enabled: false, content: "" },
       saleLabel: currentProduct?.saleLabel || { enabled: false, content: "" },
     }),
-    [currentProduct] // Directly use currentProduct as the dependency
+    [currentProduct]
   );
 
   const form = useForm<ProductFormValues>({
@@ -152,7 +116,8 @@ const ProductNewEditForm = ({
       form.reset();
       showNotification({
         title: "Success",
-        message: currentProduct ? "Update successful!" : "Product created!",
+        message: "Update successful!",
+        color: "green",
       });
       navigate("/products");
     } catch (error) {
@@ -164,18 +129,16 @@ const ProductNewEditForm = ({
     <form onSubmit={form.onSubmit(onSubmit)}>
       <Stack gap="lg">
         <Card shadow="sm" p="lg">
-          <Title order={4}>Product Details</Title>
           <TextInput
             label="Product Name"
             {...form.getInputProps("name")}
             required
+            mb={10}
           />
-          <Textarea
-            label="Description"
-            {...form.getInputProps("description")}
-            required
+          <ProductRichTextEditor
+            content={form.getInputProps("description").value}
           />
-          <Dropzone onDrop={handleDrop}>
+          <Dropzone onDrop={handleDrop} mt={10}>
             <Text ta="center">Drag images here or click to upload</Text>
           </Dropzone>
         </Card>
@@ -232,6 +195,7 @@ const ProductNewEditForm = ({
             data={PRODUCT_SIZE_OPTIONS}
           />
           <Checkbox
+            mt={10}
             label="New Label"
             {...form.getInputProps("newLabel.enabled", { type: "checkbox" })}
           />
@@ -241,8 +205,7 @@ const ProductNewEditForm = ({
             disabled={!form.values.newLabel.enabled}
           />
         </Card>
-
-        <Group align="right" mt="md">
+        <Group p={"lg"} ml={"auto"} style={{ maxWidth: "400px" }}>
           <Button type="submit" loading={false}>
             Submit
           </Button>

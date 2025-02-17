@@ -5,6 +5,8 @@ import { Notifications } from "@mantine/notifications";
 
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
+import "@mantine/dropzone/styles.css";
+import "@mantine/tiptap/styles.css";
 
 import "./App.scss";
 import { theme } from "./theme";
