@@ -6,7 +6,6 @@ import {
   Text,
   Tooltip,
   ActionIcon,
-  useMantineTheme,
 } from "@mantine/core";
 import { IconShare } from "@tabler/icons-react";
 import dayjs from "dayjs";
@@ -38,8 +37,6 @@ const BlogDetailsHero: React.FC<BlogDetailsHeroProps> = ({
   createdAt,
   socials = [],
 }) => {
-  const theme = useMantineTheme();
-
   return (
     <Box
       style={{

@@ -27,17 +27,7 @@ import {
 } from "@/components/Product/ProductTableCell";
 import { useNavigate } from "react-router-dom";
 import { useGetProducts } from "@/api/services";
-
-const PUBLISH_OPTIONS = [
-  { value: "published", label: "Published" },
-  { value: "draft", label: "Draft" },
-];
-
-export const PRODUCT_STOCK_OPTIONS = [
-  { value: "in stock", label: "In stock" },
-  { value: "low stock", label: "Low stock" },
-  { value: "out of stock", label: "Out of stock" },
-];
+import { PRODUCT_STOCK_OPTIONS, PUBLISH_OPTIONS } from "@/utils/constants";
 
 const defaultFilters = { publish: [], stock: [] };
 

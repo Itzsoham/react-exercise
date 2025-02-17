@@ -37,3 +37,20 @@ export const PRODUCT_CATEGORY_GROUP_OPTIONS = [
     classify: ["Shoes", "Backpacks and bags", "Bracelets", "Face masks"],
   },
 ];
+
+export const PUBLISH_OPTIONS = [
+  { value: "published", label: "Published" },
+  { value: "draft", label: "Draft" },
+];
+
+export const PRODUCT_STOCK_OPTIONS = [
+  { value: "in stock", label: "In stock" },
+  { value: "low stock", label: "Low stock" },
+  { value: "out of stock", label: "Out of stock" },
+];
+
+export const POST_SORT_OPTIONS = [
+  { value: "latest", label: "Latest" },
+  { value: "popular", label: "Popular" },
+  { value: "oldest", label: "Oldest" },
+];

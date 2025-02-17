@@ -1,26 +1,16 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Container, Stack, Tabs, Text } from "@mantine/core";
-import { useDebouncedValue } from "@mantine/hooks";
-
-import { useGetBlogs, useSearchBlogs } from "@/api/services";
-
-import BlogSort from "@/components/Blog/BlogSort";
-import { BlogListHorizontal } from "@/components/Blog/BlogList";
 import { orderBy } from "lodash";
+import { useNavigate, useLocation } from "react-router-dom";
 
-// ----------------------------------------------------------------------
+import { useGetBlogs } from "@/api/services";
+import { BlogListHorizontal } from "@/components/Blog/BlogListHorizontal";
+import { POST_SORT_OPTIONS } from "@/utils/constants";
+import BlogSort from "@/components/Blog/BlogSort";
 
 const defaultFilters = {
   publish: "all",
 };
-
-export const POST_SORT_OPTIONS = [
-  { value: "latest", label: "Latest" },
-  { value: "popular", label: "Popular" },
-  { value: "oldest", label: "Oldest" },
-];
-
-// ----------------------------------------------------------------------
 
 interface Post {
   id: string;
@@ -39,35 +29,47 @@ interface Filters {
   publish: string;
 }
 
-export default function PostList() {
+export default function BlogList() {
   const [sortBy, setSortBy] = useState<string>("latest");
   const [filters, setFilters] = useState<Filters>(defaultFilters);
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [debouncedQuery] = useDebouncedValue(searchQuery, 300);
+  const [filteredBlogs, setFilteredBlogs] = useState<Post[]>([]);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const { blogs, blogsLoading } = useGetBlogs();
-  const { searchResults, searchLoading } = useSearchBlogs(debouncedQuery);
 
-  const dataFiltered = applyFilter({
-    inputData: blogs,
-    filters,
-    sortBy,
-  });
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const querySortBy = searchParams.get("sortBy") || "latest";
+    const queryPublish = searchParams.get("publish") || "all";
 
-  const handleSortBy = useCallback((newValue: string) => {
-    setSortBy(newValue);
-  }, []);
+    setSortBy(querySortBy);
+    setFilters({ publish: queryPublish });
+  }, [location.search]);
 
-  const handleFilters = useCallback((name: keyof Filters, value: string) => {
-    setFilters((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }, []);
+  useEffect(() => {
+    setFilteredBlogs(applyFilter({ inputData: blogs, filters, sortBy }));
+  }, [blogs, filters, sortBy]);
 
-  const handleSearch = useCallback((inputValue: string) => {
-    setSearchQuery(inputValue);
-  }, []);
+  const handleSortBy = useCallback(
+    (newValue: string) => {
+      setSortBy(newValue);
+      navigate(`?sortBy=${newValue}&publish=${filters.publish}`);
+    },
+    [filters.publish, navigate]
+  );
+
+  const handleFilters = useCallback(
+    (name: keyof Filters, value: string) => {
+      setFilters((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+      navigate(`?sortBy=${sortBy}&publish=${value}`);
+    },
+    [sortBy, navigate]
+  );
 
   const handleFilterPublish = useCallback(
     (value: string | null) => {
@@ -77,6 +79,10 @@ export default function PostList() {
     },
     [handleFilters]
   );
+
+  const handleDelete = useCallback((id: string) => {
+    setFilteredBlogs((prevBlogs) => prevBlogs.filter((post) => post.id !== id));
+  }, []);
 
   return (
     <Container mt={50}>
@@ -128,12 +134,14 @@ export default function PostList() {
         ))}
       </Tabs>
 
-      <BlogListHorizontal posts={dataFiltered} loading={blogsLoading} />
+      <BlogListHorizontal
+        posts={filteredBlogs}
+        loading={blogsLoading}
+        onDelete={handleDelete}
+      />
     </Container>
   );
 }
-
-// ----------------------------------------------------------------------
 
 const applyFilter = ({
   inputData,
