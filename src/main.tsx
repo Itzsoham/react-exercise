@@ -1,14 +1,16 @@
-import { StrictMode } from "react";
+import { StrictMode, Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import App from "./App";
-import Landing from "./pages/landing/Landing";
 import ProtectedRoute from "./pages/landing/ProtectedRoute";
-import Login from "./pages/auth/Login";
-import ProductList from "./pages/ProductList";
-import UserDetails from "./pages/UserDetails";
+import { Loader } from "@mantine/core";
+
+const Landing = lazy(() => import("./pages/landing/Landing"));
+const Login = lazy(() => import("./pages/auth/Login"));
+const ProductList = lazy(() => import("./pages/ProductList"));
+const ProductDetails = lazy(() => import("./pages/ProductDetails"));
 
 export const routes = [
   {
@@ -22,7 +24,7 @@ export const routes = [
         children: [
           { path: "/", element: <Landing /> },
           { path: "/products", element: <ProductList /> },
-          { path: "/users/:id", element: <UserDetails /> },
+          { path: "/product/:id", element: <ProductDetails /> },
         ],
       },
     ],
@@ -40,10 +42,13 @@ const queryClient = new QueryClient({
     },
   },
 });
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <Suspense fallback={<Loader />}>
+        <RouterProvider router={router} />
+      </Suspense>
     </QueryClientProvider>
   </StrictMode>
 );

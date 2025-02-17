@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { MultiSelect, Button, Menu, Popover } from "@mantine/core";
-import { IconPrinter, IconUpload, IconDownload } from "@tabler/icons-react";
 
 interface FilterOption {
   value: string;

@@ -93,7 +93,7 @@ export default function ProductListView() {
 
   const handleEditRow = useCallback(
     (id: string) => {
-      navigate(`/dashboard/product/edit/${id}`);
+      navigate(`/product/${id}`);
     },
     [navigate]
   );

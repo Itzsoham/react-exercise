@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import { MantineProvider } from "@mantine/core";
+import { Loader, MantineProvider } from "@mantine/core";
 import { theme } from "./theme";
 import "./App.scss";
 import "@mantine/core/styles.css";
@@ -14,7 +14,22 @@ export default function App() {
 
   return (
     <MantineProvider theme={theme}>
-      <Outlet />
+      <Suspense
+        fallback={
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
+            <Loader />
+          </div>
+        }
+      >
+        <Outlet />
+      </Suspense>
     </MantineProvider>
   );
 }

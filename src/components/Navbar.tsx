@@ -33,7 +33,7 @@ export function Navbar() {
             size="xl"
             radius="xl"
             onClick={() => navigate("/")}
-            className="logo"
+            className={classes.logo}
           >
             <IconCrown />
           </ThemeIcon>
